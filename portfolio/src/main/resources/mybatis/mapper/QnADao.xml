@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.study.springboot.dao.IQnADao">
+
+<!-- 1:1 문의 목록_내림차순 ; 1:1 문의 번호 -->
+	<select id="QnAlist" resultType="com.study.springboot.dto.QnADto">
+		SELECT * FROM hp_QnA ORDER BY qna_Index desc
+	</select> 
+	
+	</mapper>	
