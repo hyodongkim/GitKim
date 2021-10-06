@@ -28,8 +28,6 @@ import com.study.springboot.service.AdminService;
 @Controller
 public class MyController {
 	
-	//askdjgajshdgkjhas
-	
 	@Autowired
 	private AdminService adminService;
 	
