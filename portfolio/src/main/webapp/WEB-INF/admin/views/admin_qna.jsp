@@ -104,7 +104,7 @@
                     <td>${hp_Qna.qna_Title}</td>
                     <td>${hp_Qna.qna_Date}</td>
                     <td>${hp_Qna.answer_Check}</td>
-                    <td>?</td>
+                    <td>${qna_answer}</td>
                 </tr>
             </c:forEach>
         </table>
