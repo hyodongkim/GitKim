@@ -2,7 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true" %>    
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> <!-- 날짜 변경 라이브러리 -->
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -89,29 +90,33 @@
         <table class="table table-hover">
             <Thead>
                 <tr>
-                    <th>번호1</th>
-                    <th>번호2</th>
-                    <th>질문자</th>
-                    <th>제목</th>
-                    <th>내용</th>
+                    <th>질문 번호</th>
+                    <th>회원 번호</th>
+                    <th>회원 아이디</th>
+                    <th>질문 제목</th>
+                    <th>질문 내용</th>
+                    <th>작성 날짜</th>
                     <th>처리 여부</th>
                     <th>완료 날짜</th>
                 </tr>
             </Thead>
-            <c:forEach var="hp_Qna" items="${hp_qna_list}">
-                <tr>
-                    <td>${hp_Qna.qna_Index}</td>
-                    <td>${hp_Qna.hp_Index}</td>
-                    <td>${hp_Qna.hp_ID}</td>
-                    <td>${hp_Qna.qna_Title}</td>
-                    <td>${hp_Qna.qna_Content}</td>
-                    <td>${hp_Qna.answer_Check}</td>
-                    <td>${hp_Qna.qna_Date}</td>
-                    <td><a href="/admin/views/write_qna">갱신</a></td>
-                    <td><a href="/admin/views/write_qna1">삽입</a></td>
-                    <td><a href="/admin/views/write_qna2">삭제</a></td>
-                  
-                </tr>
+            <c:forEach var="hp_Qna" items="${QnADto_admin}" varStatus="status">
+				
+	            	 <tr>
+	                    <td>${hp_Qna.qna_Index}</td>
+	                    <td>${hp_Qna.hp_Index}</td>
+	                    <td>${hp_Qna.hp_ID}</td>
+	                    <td>${hp_Qna.qna_Title}</td>
+	                    <td>${hp_Qna.qna_Content}</td>
+	                    <td><fmt:formatDate value="${hp_Qna.qna_Date}" pattern="yyyy년 MM월 dd일"/></td>
+	                    <td>${hp_Qna.answer_Check}</td>
+	                    <td><fmt:formatDate value="${hp_Qna.answer_Date}" pattern="yyyy년 MM월 dd일"/></td>
+	                    <td><a href="/admin/views/write_qna">갱신</a></td>
+	                    <td><a href="/admin/views/write_qna1">삽입</a></td>
+	                    <td><a href="/admin/views/write_qna2">삭제</a></td>
+	                  
+	                </tr>
+               
             </c:forEach>
         </table>
     </div>
