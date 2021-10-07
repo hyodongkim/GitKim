@@ -65,11 +65,6 @@ public class MyController {
 	}
 	
 	// 관리자
-	  // 회원
-		
-		
-		
-		
 		
 	  // 도서 목록
 		@RequestMapping("/admin/views/admin_book")
@@ -80,37 +75,33 @@ public class MyController {
 			
 			return "admin/views/admin_book";
 		}
-		
-		@RequestMapping("/admin/views/content_view")
-		public String view( @RequestParam("book_Index") int book_Index, Model model) {
+		// 도서 목록 contentView
+		   @RequestMapping("/admin/views/content_view")
+		   public String view( @RequestParam("book_Index") int book_Index, Model model) {
 			
-			model.addAttribute("dto", iBookListDao.contentView(book_Index));
+			   model.addAttribute("dto", iBookListDao.contentView(book_Index));
 			
-			return "view";
-		}
-		// 도서 목록 갱신이 가능한 페이지
-		@RequestMapping("/admin/views/write_view")
-		public String view(HttpServletRequest req, Model model) {
+			   return "view";
+		   }
+	     // 도서 목록 갱신이 가능한 페이지
+		   	@RequestMapping("/admin/views/write_view")
+		   	public String view(HttpServletRequest req, Model model) {
 			
-			
-			return "admin/views/write_view";
-		}
+		   		return "admin/views/write_view";
+		   	}
 		
 		// 도서 목록 삽입이 가능한 페이지
 				@RequestMapping("/admin/views/write_view1")
 				public String view1(HttpServletRequest req, Model model) {
 					
-					
 					return "admin/views/write_view1";
 				}
-		// 도서 목록 갱신이 가능한 페이지
-				@RequestMapping("/admin/views/write_view2")
-				public String view2(HttpServletRequest req, Model model) {
-					
-					
-					return "admin/views/write_view2";
-				}
-		
+		   // 도서 목록 갱신이 가능한 페이지
+			  @RequestMapping("/admin/views/write_view2")
+			  public String view2(HttpServletRequest req, Model model) {
+				
+				  return "admin/views/write_view2";
+			  }
 		
 		// 도서 목록 삽입
 		@RequestMapping(value="/addBook", method=RequestMethod.GET)
@@ -126,17 +117,14 @@ public class MyController {
 			
 			                   iBookListDao.addBook(book_Title, book_Writer, book_Company, book_Image, book_Content,
 			                		        book_Introduce, book_Category);
-			                   
-			                   
-				                     
+			                              
 			return "redirect:/admin/views/admin_book";
-			
 	
 		}
 
 		// 도서 목록 갱신
-		@RequestMapping(value="/updateBook", method=RequestMethod.GET)
-		public String updateBook( 
+		  @RequestMapping(value="/updateBook", method=RequestMethod.GET)
+		  public String updateBook( 
 				           
 				   @RequestParam("book_Index") int book_Index,
 				   @RequestParam("book_Title") String book_Title,
@@ -149,35 +137,20 @@ public class MyController {
 			
 	         iBookListDao.updateBook(book_Index, book_Title, book_Writer, book_Company, book_Image, book_Content,
     		        book_Introduce, book_Category);
-			
-		//	model.addAttribute("book_Index",book_Index);
-		//	model.addAttribute("book_Title",book_Title);
-		//	model.addAttribute("book_Writer",book_Writer);
-		//	model.addAttribute("book_Company",book_Company);
-		//	model.addAttribute("book_Image",book_Image);
-		//	model.addAttribute("book_Content",book_Content);
-		//	model.addAttribute("book_Introduce",book_Introduce);
-		//	model.addAttribute("book_Category",book_Category);
 						                     
 			return "redirect:/admin/views/admin_book";
 					
 		}
 		
 		// 도서 목록 삭제
-		@RequestMapping(value="/deleteBook", method=RequestMethod.GET)
-		public String deleteBook( @RequestParam("book_Index") int book_Index, ModelMap modelMap ) throws Exception {
+		  @RequestMapping(value="/deleteBook", method=RequestMethod.GET)
+		  public String deleteBook( @RequestParam("book_Index") int book_Index, ModelMap modelMap ) throws Exception {
 			
-		iBookListDao.deleteBook(book_Index);
-		
+			  iBookListDao.deleteBook(book_Index);
 						                     
-		return "redirect:/admin/views/admin_book";
+			  return "redirect:/admin/views/admin_book";
 					
 		}
-		
-		
-		
-		
-		
 		
 		
 	  // 도서 리뷰	
@@ -190,213 +163,160 @@ public class MyController {
 			
 			return "admin/views/admin_review";
 		}
-
 		// 도서 리뷰 목록 갱신이 가능한 페이지
-				@RequestMapping("/admin/views/write_review")
-				public String review(HttpServletRequest req, Model model) {
-					
-					
-					return "admin/views/write_review";
-				}
+			@RequestMapping("/admin/views/write_review")
+			public String review(HttpServletRequest req, Model model) {
 				
-				// 도서 리뷰 목록 삽입이 가능한 페이지
-						@RequestMapping("/admin/views/write_review1")
-						public String review1(HttpServletRequest req, Model model) {
-							
-							
-							return "admin/views/write_review1";
-						}
-				// 도서 리뷰 목록 갱신이 가능한 페이지
-						@RequestMapping("/admin/views/write_review2")
-						public String review2(HttpServletRequest req, Model model) {
-							
-							
-							return "admin/views/write_review2";
-						}
-						
+				return "admin/views/write_review";
+			}
 			
-						// 도서 리뷰 목록 삽입
-						@RequestMapping(value="/addBookReview", method=RequestMethod.GET)
-						public String addBookReview( 
-								               @RequestParam("book_Index") int book_Index,
-								               @RequestParam("hp_Index") int hp_Index, 
-								               @RequestParam("book_Title") String book_Title, 
-								               @RequestParam("review_name") String review_name,
-								               @RequestParam("review_password") String review_password,
-								               @RequestParam("book_review") String book_review,
-								            
-								               ModelMap modelMap ) throws Exception{
-							
-							                   iBookReviewDao.addBookReview(book_Index, hp_Index, book_Title, review_name, review_password,
-							                		   book_review);
-							                   
-							                   
-								                     
-							return "redirect:/admin/views/admin_review";
-							
+	  // 도서 리뷰 목록 삽입이 가능한 페이지
+		  @RequestMapping("/admin/views/write_review1")
+		  public String review1(HttpServletRequest req, Model model) {
+				
+		     return "admin/views/write_review1";
+		  }
+		// 도서 리뷰 목록 갱신이 가능한 페이지
+			@RequestMapping("/admin/views/write_review2")
+			public String review2(HttpServletRequest req, Model model) {
+				
+				return "admin/views/write_review2";
+			}
 					
-						}
-
-						// 도서 리뷰 목록 갱신
-						@RequestMapping(value="/updateBookReview", method=RequestMethod.GET)
-						public String updateBookReview( 
-								           
-								   @RequestParam("review_Index") int review_Index,
-								   @RequestParam("book_Index") int book_Index,
-					               @RequestParam("hp_Index") int hp_Index, 
-					               @RequestParam("book_Title") String book_Title, 
-					               @RequestParam("review_name") String review_name,
-					               @RequestParam("review_password") String review_password,
-					               @RequestParam("book_review") String book_review,
-					               ModelMap modelMap) throws Exception{
-							
-					         iBookReviewDao.updateBookReview(review_Index, book_Index, hp_Index, book_Title, review_name, review_password,
-					        		 book_review);
-							
-						//	model.addAttribute("book_Index",book_Index);
-						//	model.addAttribute("book_Title",book_Title);
-						//	model.addAttribute("book_Writer",book_Writer);
-						//	model.addAttribute("book_Company",book_Company);
-						//	model.addAttribute("book_Image",book_Image);
-						//	model.addAttribute("book_Content",book_Content);
-						//	model.addAttribute("book_Introduce",book_Introduce);
-						//	model.addAttribute("book_Category",book_Category);
-										                     
-							return "redirect:/admin/views/admin_review";
-									
-						}
+	  // 도서 리뷰 목록 삽입
+		  @RequestMapping(value="/addBookReview", method=RequestMethod.GET)
+		  public String addBookReview( 
+				               @RequestParam("book_Index") int book_Index,
+				               @RequestParam("hp_Index") int hp_Index, 
+				               @RequestParam("book_Title") String book_Title, 
+				               @RequestParam("review_name") String review_name,
+				               @RequestParam("review_password") String review_password,
+				               @RequestParam("book_review") String book_review,
+				            
+				               ModelMap modelMap ) throws Exception{
+			
+			                   iBookReviewDao.addBookReview(book_Index, hp_Index, book_Title, review_name, review_password,
+			                		   book_review);
+			                   	                     
+			  return "redirect:/admin/views/admin_review";
+			
+		}
+		 // 도서 리뷰 목록 갱신
+			@RequestMapping(value="/updateBookReview", method=RequestMethod.GET)
+			public String updateBookReview(         
+					   @RequestParam("review_Index") int review_Index,
+					   @RequestParam("book_Index") int book_Index,
+		               @RequestParam("hp_Index") int hp_Index, 
+		               @RequestParam("book_Title") String book_Title, 
+		               @RequestParam("review_name") String review_name,
+		               @RequestParam("review_password") String review_password,
+		               @RequestParam("book_review") String book_review,
+		               ModelMap modelMap) throws Exception{
+				
+		         iBookReviewDao.updateBookReview(review_Index, book_Index, hp_Index, book_Title, review_name, review_password,
+		        		 book_review);
+							                     
+				return "redirect:/admin/views/admin_review";
 						
-						// 도서 리뷰 목록 삭제
-						@RequestMapping(value="/deleteBookReview", method=RequestMethod.GET)
-						public String deleteBookReview( @RequestParam("review_Index") int review_Index, ModelMap modelMap ) throws Exception {
-							
-						iBookReviewDao.deleteBookReview(review_Index);
-						
-										                     
-						return "redirect:/admin/views/admin_review";
-									
-						}
-		
-		
-		
-		
-		
-						
-						
-						
-						// 유저 목록
-						@RequestMapping("/admin/views/admin_member")
-						public String admin_member( HttpServletRequest req, Model model ) {
-							
-							List<MemberDto> memberlist = adminService.memberlist();
-							model.addAttribute("hp_member_list",memberlist);
-							
-							return "admin/views/admin_member";
-						}
-						
+			}
 					
-						// 유저 목록 갱신이 가능한 페이지
-						@RequestMapping("/admin/views/write_member")
-						public String member(HttpServletRequest req, Model model) {
-							
-							
-							return "admin/views/write_member";
-						}
-						
-						// 유저 목록 삽입이 가능한 페이지
-								@RequestMapping("/admin/views/write_member1")
-								public String member1(HttpServletRequest req, Model model) {
-									
-									
-									return "admin/views/write_member1";
-								}
-						// 유저 목록 갱신이 가능한 페이지
-								@RequestMapping("/admin/views/write_member2")
-								public String member2(HttpServletRequest req, Model model) {
-									
-									
-									return "admin/views/write_member2";
-								}
-						
-								// 유저 목록 삽입
-								@RequestMapping(value="/addMember", method=RequestMethod.GET)
-								public String addMember( 
-										               @RequestParam("hp_ID") String hp_ID,
-										               @RequestParam("hp_Password") String hp_Password, 
-										               @RequestParam("hp_Name") String hp_Name, 
-										               @RequestParam("hp_Birthday_Year") int hp_Birthday_Year,
-										               @RequestParam("hp_Birthday_Month") int hp_Birthday_Month,
-										               @RequestParam("hp_Sex") int hp_Sex,
-										               @RequestParam("hp_Email") String hp_Email,
-										               @RequestParam("hp_Phone") String hp_Phone,
-										               @RequestParam("hp_Ticket") int hp_Ticket,
-										               @RequestParam("hp_Auth") int hp_Auth,
-										              
-										               ModelMap modelMap ) throws Exception{
-									
-									                   iMemberDao.addMember(hp_ID, hp_Password, hp_Name, hp_Birthday_Year, hp_Birthday_Month,
-									                		   hp_Sex, hp_Email, hp_Phone, hp_Ticket, hp_Auth);
-									                   
-									                   
-										                     
-									return "redirect:/admin/views/admin_member";
-									
-							
-								}
+	  // 도서 리뷰 목록 삭제
+		  @RequestMapping(value="/deleteBookReview", method=RequestMethod.GET)
+		  public String deleteBookReview( @RequestParam("review_Index") int review_Index, ModelMap modelMap ) throws Exception {
+			
+			  iBookReviewDao.deleteBookReview(review_Index);
+				                     
+			  return "redirect:/admin/views/admin_review";
+					
+		  	}
 
-								// 유저 목록 갱신
-								@RequestMapping(value="/updateMember", method=RequestMethod.GET)
-								public String updateMember( 
-										          
-										   @RequestParam("hp_Index") int hp_Index,
-										   @RequestParam("hp_ID") String hp_ID,
-							               @RequestParam("hp_Password") String hp_Password, 
-							               @RequestParam("hp_Name") String hp_Name, 
-							               @RequestParam("hp_Birthday_Year") int hp_Birthday_Year,
-							               @RequestParam("hp_Birthday_Month") int hp_Birthday_Month,
-							               @RequestParam("hp_Sex") int hp_Sex,
-							               @RequestParam("hp_Email") String hp_Email,
-							               @RequestParam("hp_Phone") String hp_Phone,
-							               @RequestParam("hp_Ticket") int hp_Ticket,
-							               @RequestParam("hp_Auth") int hp_Auth, ModelMap modelMap) throws Exception{
-									
-									iMemberDao.updateMember(hp_Index, hp_ID, hp_Password, hp_Name, hp_Birthday_Year, hp_Birthday_Month,
+		  // 회원
+			// 유저 목록
+				@RequestMapping("/admin/views/admin_member")
+				public String admin_member( HttpServletRequest req, Model model ) {
+					
+					List<MemberDto> memberlist = adminService.memberlist();
+					model.addAttribute("hp_member_list",memberlist);
+					
+					return "admin/views/admin_member";
+				}
+				// 유저 목록 갱신이 가능한 페이지
+				  @RequestMapping("/admin/views/write_member")
+				  public String member(HttpServletRequest req, Model model) {
+					
+					  return "admin/views/write_member";
+				  }
+						
+			 // 유저 목록 삽입이 가능한 페이지
+				@RequestMapping("/admin/views/write_member1")
+				public String member1(HttpServletRequest req, Model model) {
+					
+					return "admin/views/write_member1";
+				}
+				// 유저 목록 갱신이 가능한 페이지
+				   @RequestMapping("/admin/views/write_member2")
+				   public String member2(HttpServletRequest req, Model model) {
+						
+					   return "admin/views/write_member2";
+					}
+						
+			// 유저 목록 삽입
+			   @RequestMapping(value="/addMember", method=RequestMethod.GET)
+			   public String addMember( 
+						               @RequestParam("hp_ID") String hp_ID,
+						               @RequestParam("hp_Password") String hp_Password, 
+						               @RequestParam("hp_Name") String hp_Name, 
+						               @RequestParam("hp_Birthday_Year") int hp_Birthday_Year,
+						               @RequestParam("hp_Birthday_Month") int hp_Birthday_Month,
+						               @RequestParam("hp_Sex") int hp_Sex,
+						               @RequestParam("hp_Email") String hp_Email,
+						               @RequestParam("hp_Phone") String hp_Phone,
+						               @RequestParam("hp_Ticket") int hp_Ticket,
+						               @RequestParam("hp_Auth") int hp_Auth,
+						              
+						               ModelMap modelMap ) throws Exception{
+					
+					                   iMemberDao.addMember(hp_ID, hp_Password, hp_Name, hp_Birthday_Year, hp_Birthday_Month,
 					                		   hp_Sex, hp_Email, hp_Phone, hp_Ticket, hp_Auth);
-									
-								//	model.addAttribute("book_Index",book_Index);
-								//	model.addAttribute("book_Title",book_Title);
-								//	model.addAttribute("book_Writer",book_Writer);
-								//	model.addAttribute("book_Company",book_Company);
-								//	model.addAttribute("book_Image",book_Image);
-								//	model.addAttribute("book_Content",book_Content);
-								//	model.addAttribute("book_Introduce",book_Introduce);
-								//	model.addAttribute("book_Category",book_Category);
-												                     
-									return "redirect:/admin/views/admin_member";
-											
-								}
+					                   		                     
+					return "redirect:/admin/views/admin_member";
+					
+				}
+				 // 유저 목록 갱신
+					@RequestMapping(value="/updateMember", method=RequestMethod.GET)
+					public String updateMember( 
+							          
+							   @RequestParam("hp_Index") int hp_Index,
+							   @RequestParam("hp_ID") String hp_ID,
+				               @RequestParam("hp_Password") String hp_Password, 
+				               @RequestParam("hp_Name") String hp_Name, 
+				               @RequestParam("hp_Birthday_Year") int hp_Birthday_Year,
+				               @RequestParam("hp_Birthday_Month") int hp_Birthday_Month,
+				               @RequestParam("hp_Sex") int hp_Sex,
+				               @RequestParam("hp_Email") String hp_Email,
+				               @RequestParam("hp_Phone") String hp_Phone,
+				               @RequestParam("hp_Ticket") int hp_Ticket,
+				               @RequestParam("hp_Auth") int hp_Auth, ModelMap modelMap) throws Exception{
+						
+						iMemberDao.updateMember(hp_Index, hp_ID, hp_Password, hp_Name, hp_Birthday_Year, hp_Birthday_Month,
+		                		   hp_Sex, hp_Email, hp_Phone, hp_Ticket, hp_Auth);
+						
+						return "redirect:/admin/views/admin_member";
 								
-								// 유저 목록 삭제
-								@RequestMapping(value="/deleteMember", method=RequestMethod.GET)
-								public String deleteMember( @RequestParam("hp_Index") int hp_Index, ModelMap modelMap ) throws Exception {
-									
-								iMemberDao.deleteMember(hp_Index);
+					}
 								
-												                     
-								return "redirect:/admin/views/admin_member";
-											
-								}
-						
-						
-						
-						
-						
-						
-						
-						
-						
-						
+			 // 유저 목록 삭제
+				@RequestMapping(value="/deleteMember", method=RequestMethod.GET)
+				public String deleteMember( @RequestParam("hp_Index") int hp_Index, ModelMap modelMap ) throws Exception {
+					
+					iMemberDao.deleteMember(hp_Index);
+							                     
+					return "redirect:/admin/views/admin_member";
+							
+				}
+								
 		
+	// 공지사항			
 	  // 공지사항 목록
 		@RequestMapping("/admin/views/admin_notice")
 		public String admin_notice( HttpServletRequest req, Model model ) {
@@ -406,50 +326,35 @@ public class MyController {
 			
 			return "admin/views/admin_notice";
 		}
-		
-		// 공지사항 목록 갱신이 가능한 페이지
-				@RequestMapping("/admin/views/write_notice")
-				public String notice(HttpServletRequest req, Model model) {
-					
-					
-					return "admin/views/write_notice";
-				}
+	     // 공지사항 목록 갱신이 가능한 페이지
+			@RequestMapping("/admin/views/write_notice")
+			public String notice(HttpServletRequest req, Model model) {
 				
-				// 공지사항 목록 삽입이 가능한 페이지
-						@RequestMapping("/admin/views/write_notice1")
-						public String notice1(HttpServletRequest req, Model model) {
-							
-							
-							return "admin/views/write_notice1";
-						}
-				// 공지사항 목록 삭제가 가능한 페이지
-						@RequestMapping("/admin/views/write_notice2")
-						public String notice2(HttpServletRequest req, Model model) {
-							
-							
-							return "admin/views/write_notice2";
-						}
+				return "admin/views/write_notice";
+			}
 				
+		 // 공지사항 목록 삽입이 가능한 페이지
+			@RequestMapping("/admin/views/write_notice1")
+			public String notice1(HttpServletRequest req, Model model) {
 				
-				// 공지사항 목록 삽입
-				@RequestMapping(value="/addNotice", method=RequestMethod.GET)
-				public String addNotice( 
-						               @RequestParam("notice_Title") String notice_Title,
-						               @RequestParam("notice_Content") String notice_Content,
-						               @RequestParam("notice_Count") int notice_Count,
-						       
-						               ModelMap modelMap ) throws Exception{
-					
-					                   iNoticeDao.addNotice(notice_Title, notice_Content);
-					                   
-					                   
-						                     
-					return "redirect:/admin/views/admin_notice";
-					
-			
-				}
-
-				// 공지사항 목록 갱신
+				return "admin/views/write_notice1";
+			}
+				
+		 // 공지사항 목록 삽입
+			@RequestMapping(value="/addNotice", method=RequestMethod.GET)
+			public String addNotice( 
+					               @RequestParam("notice_Title") String notice_Title,
+					               @RequestParam("notice_Content") String notice_Content,
+					               @RequestParam("notice_Count") int notice_Count,
+					       
+					               ModelMap modelMap ) throws Exception{
+				
+				                   iNoticeDao.addNotice(notice_Title, notice_Content);
+				                                 
+				return "redirect:/admin/views/admin_notice";
+				
+			}
+			 // 공지사항 목록 갱신
 				@RequestMapping(value="/updateNotice", method=RequestMethod.GET)
 				public String updateNotice( 
 						         
@@ -459,46 +364,37 @@ public class MyController {
 			               @RequestParam("notice_Count") int notice_Count,ModelMap modelMap) throws Exception{
 					
 			         iNoticeDao.updateNotice(notice_Index, notice_Title, notice_Content);
-					
-				//	model.addAttribute("book_Index",book_Index);
-				//	model.addAttribute("book_Title",book_Title);
-				//	model.addAttribute("book_Writer",book_Writer);
-				//	model.addAttribute("book_Company",book_Company);
-				//	model.addAttribute("book_Image",book_Image);
-				//	model.addAttribute("book_Content",book_Content);
-				//	model.addAttribute("book_Introduce",book_Introduce);
-				//	model.addAttribute("book_Category",book_Category);
 								                     
-					return "redirect:/admin/views/admin_notice";
+			         return "redirect:/admin/views/admin_notice";
 							
 				}
 				
-				// 공지사항 목록 삭제
+		 // 공지사항 목록 삭제가 가능한 페이지
+			@RequestMapping("/admin/views/write_notice2")
+			public String notice2(HttpServletRequest req, Model model) {
+				
+				return "admin/views/write_notice2";
+			}
+			 // 공지사항 목록 삭제
 				@RequestMapping(value="/deleteNotice", method=RequestMethod.GET)
 				public String deleteNotice( @RequestParam("notice_Index") int notice_Index, ModelMap modelMap ) throws Exception {
 					
 				iNoticeDao.deleteNotice(notice_Index);
-				
-								                     
+							                     
 				return "redirect:/admin/views/admin_notice";
 							
 				}
 				
-				// 공지사항 조회수 올리기
-				@RequestMapping(value="/countNotice", method=RequestMethod.GET)
-				public ModelAndView countNotice( @RequestParam("count") int count) throws Exception {
-					
-				adminService.countNotice(count);
+		 // 공지사항 조회수 올리기
+			@RequestMapping(value="/countNotice", method=RequestMethod.GET)
+			public ModelAndView countNotice( @RequestParam("count") int count) throws Exception {
 				
-								                     
+				adminService.countNotice(count);
+							                     
 				return new ModelAndView("countNotice","countNotice1", adminService.countNotice(count));
 							
-				}
-				
-				
-				
-				
-				
+			}
+					
 		
 	  // 1:1 문의	
 		@RequestMapping("/admin/views/admin_qna")
@@ -510,13 +406,14 @@ public class MyController {
 			return "admin/views/admin_qna";
 		}
 
-	
+
+		
+		
+		
 	// 사용자
 	 // 메인화면	
 		@RequestMapping("/user/views/main")
 		public String main( HttpServletRequest req, Model model ) {
-			
-			
 			
 			return "user/views/main";
 		}
@@ -525,8 +422,6 @@ public class MyController {
 		@RequestMapping("/user/views/member/login")
 		public String login( HttpServletRequest req, Model model ) {
 			
-			
-		
 			return "user/views/member/login";
 		}	
 		
@@ -534,8 +429,6 @@ public class MyController {
 		@RequestMapping("/user/views/member/join")
 		public String join( HttpServletRequest req, Model model ) {
 			
-			
-		
 			return "user/views/member/join";
 		}
 		
