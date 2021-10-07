@@ -1,5 +1,6 @@
 package com.study.springboot;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,11 +19,14 @@ import com.study.springboot.dao.IBookListDao;
 import com.study.springboot.dao.IBookReviewDao;
 import com.study.springboot.dao.IMemberDao;
 import com.study.springboot.dao.INoticeDao;
+import com.study.springboot.dao.IQnADao;
 import com.study.springboot.dto.BookListDto;
 import com.study.springboot.dto.BookReviewDto;
 import com.study.springboot.dto.MemberDto;
 import com.study.springboot.dto.NoticeDto;
 import com.study.springboot.dto.QnADto;
+import com.study.springboot.dto.QnADto_admin;
+import com.study.springboot.dto.QnA_AnswerDto;
 import com.study.springboot.service.AdminService;
 
 @Controller
@@ -42,6 +46,9 @@ public class MyController {
 	
 	@Autowired
 	private INoticeDao iNoticeDao;
+	
+	@Autowired
+	private IQnADao iQnADao;
 	
 	
 	@RequestMapping("/")
@@ -486,12 +493,12 @@ public class MyController {
 				
 				// 공지사항 조회수 올리기
 				@RequestMapping(value="/countNotice", method=RequestMethod.GET)
-				public ModelAndView countNotice( @RequestParam("count") int count) throws Exception {
+				public ModelAndView countNotice( @RequestParam("notice_Count") int notice_Count) throws Exception {
 					
-				adminService.countNotice(count);
+				adminService.countNotice(notice_Count);
 				
 								                     
-				return new ModelAndView("countNotice","countNotice1", adminService.countNotice(count));
+				return new ModelAndView("countNotice","countNotice1", adminService.countNotice(notice_Count));
 							
 				}
 				
@@ -502,13 +509,133 @@ public class MyController {
 		
 	  // 1:1 문의	
 		@RequestMapping("/admin/views/admin_qna")
-		public String admin_qna( HttpServletRequest req, Model model ) {
+		public String admin_qna( HttpServletRequest req, Model model
+		/* ,@RequestParam("answer_Date") Date answer_Date */ ) {
 			
-			List<QnADto> qnalist = adminService.QnAlist();
-			model.addAttribute("hp_qna_list",qnalist);
+			// 1:1 문의 목록
+			  List<QnADto> qnalist = adminService.QnAlist();
+//			  model.addAttribute("hp_qna_list",qnalist);
+			  
 			
+			// 1:1 문의 답
+			  List<QnADto_admin> QnADto_admin_list = new ArrayList<QnADto_admin>();
+			  
+			  for( QnADto dto : qnalist) {
+				  QnADto_admin tmp_Dto_admin = new QnADto_admin();
+				  
+				  tmp_Dto_admin.setQna_Index( dto.getQna_Index() );
+				  tmp_Dto_admin.setHp_Index( dto.getHp_Index() );
+				  tmp_Dto_admin.setHp_ID( dto.getHp_ID() );
+				  tmp_Dto_admin.setQna_Title( dto.getQna_Title() );
+				  tmp_Dto_admin.setQna_Content( dto.getQna_Content() );
+				  tmp_Dto_admin.setAnswer_Check( dto.getAnswer_Check() );
+				  tmp_Dto_admin.setQna_Date( dto.getQna_Date() );
+				  
+				  
+				  List<QnA_AnswerDto> qna_answer_list_tmp = adminService.QnA_Answer( dto.getQna_Index() );
+				  for( QnA_AnswerDto dto_answer : qna_answer_list_tmp) {
+					  
+					  tmp_Dto_admin.setAnswer_Date( dto_answer.getAnswer_Date() );
+					  
+					  QnADto_admin_list.add(tmp_Dto_admin);
+				  }
+			  }
+			
+			 model.addAttribute("QnADto_admin", QnADto_admin_list);
+			
+ 			
 			return "admin/views/admin_qna";
 		}
+		
+		// 1:1 문의 목록 갱신이 가능한 페이지
+		@RequestMapping("/admin/views/write_qna")
+		public String qna(HttpServletRequest req, Model model) {
+			
+			
+			return "admin/views/write_qna";
+		}
+		
+		// 1:1 문의 목록 삽입이 가능한 페이지
+				@RequestMapping("/admin/views/write_qna1")
+				public String qna1(HttpServletRequest req, Model model) {
+					
+					
+					return "admin/views/write_qna1";
+				}
+		// 1:1 문의 목록 삭제가 가능한 페이지
+				@RequestMapping("/admin/views/write_qna2")
+				public String qna2(HttpServletRequest req, Model model) {
+					
+					
+					return "admin/views/write_qna2";
+				}
+				
+				
+				
+			
+				// 1:1 문의 목록 삽입
+				@RequestMapping(value="/addQnA", method=RequestMethod.GET)
+				public String addQnA( 
+					
+						   @RequestParam("hp_Index") int hp_Index,
+			               @RequestParam("hp_ID") String hp_ID, 
+			               @RequestParam("qna_Title") String qna_Title,
+			               @RequestParam("qna_Content") String qna_Content,
+			               @RequestParam("answer_Check") int answer_Check,
+			               
+						               ModelMap modelMap ) throws Exception{
+					
+					                   iQnADao.addQnA(hp_Index,hp_ID,qna_Title,qna_Content,answer_Check);
+					                   
+					                   
+						                     
+					return "redirect:/admin/views/admin_qna";
+					
+			
+				}
+
+				// 1:1 문의 목록 갱신
+				@RequestMapping(value="/updateQnA", method=RequestMethod.GET)
+				public String updateNotice( 
+						         
+						   @RequestParam("qna_Index") int qna_Index,
+						   @RequestParam("hp_Index") int hp_Index,
+			               @RequestParam("hp_ID") String hp_ID, 
+			               @RequestParam("qna_Title") String qna_Title,
+			               @RequestParam("qna_Content") String qna_Content,
+			               @RequestParam("answer_Check") int answer_Check
+			               
+			               ,ModelMap modelMap) throws Exception{
+					
+			         iQnADao.updateQnA(qna_Index,hp_Index, hp_ID, qna_Title,qna_Content, answer_Check);
+					
+				//	model.addAttribute("book_Index",book_Index);
+				//	model.addAttribute("book_Title",book_Title);
+				//	model.addAttribute("book_Writer",book_Writer);
+				//	model.addAttribute("book_Company",book_Company);
+				//	model.addAttribute("book_Image",book_Image);
+				//	model.addAttribute("book_Content",book_Content);
+				//	model.addAttribute("book_Introduce",book_Introduce);
+				//	model.addAttribute("book_Category",book_Category);
+								                     
+					return "redirect:/admin/views/admin_qna";
+							
+				}
+				
+				// 1:1 문의 목록 삭제
+				@RequestMapping(value="/deleteQnA", method=RequestMethod.GET)
+				public String deleteQnA( @RequestParam("qna_Index") int qna_Index, ModelMap modelMap ) throws Exception {
+					
+				iQnADao.deleteQnA(qna_Index);
+				
+								                     
+				return "redirect:/admin/views/admin_qna";
+							
+				}
+				
+				
+				
+				
 
 	
 	// 사용자
