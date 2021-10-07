@@ -89,10 +89,11 @@
         <table class="table table-hover">
             <Thead>
                 <tr>
-                    <th>번호</th>
+                    <th>번호1</th>
+                    <th>번호2</th>
                     <th>질문자</th>
                     <th>제목</th>
-                    <th>날짜</th>
+                    <th>내용</th>
                     <th>처리 여부</th>
                     <th>완료 날짜</th>
                 </tr>
@@ -100,11 +101,16 @@
             <c:forEach var="hp_Qna" items="${hp_qna_list}">
                 <tr>
                     <td>${hp_Qna.qna_Index}</td>
+                    <td>${hp_Qna.hp_Index}</td>
                     <td>${hp_Qna.hp_ID}</td>
                     <td>${hp_Qna.qna_Title}</td>
-                    <td>${hp_Qna.qna_Date}</td>
+                    <td>${hp_Qna.qna_Content}</td>
                     <td>${hp_Qna.answer_Check}</td>
-                    <td>${qna_answer}</td>
+                    <td>${hp_Qna.qna_Date}</td>
+                    <td><a href="/admin/views/write_qna">갱신</a></td>
+                    <td><a href="/admin/views/write_qna1">삽입</a></td>
+                    <td><a href="/admin/views/write_qna2">삭제</a></td>
+                  
                 </tr>
             </c:forEach>
         </table>
