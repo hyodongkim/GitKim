@@ -48,7 +48,7 @@
 	
 	<!-- 관리자 로그인 : 아이디 & 패스워드 -->
 	<select id="adminLogin" resultType="_int">
-		SELECT COUNT(*) FROM hp_Member WHERE hp_ID=#{param1} AND hp_Password=#{param2}
+		SELECT COUNT(*) FROM hp_Member WHERE hp_ID=#{param1} AND hp_Password=#{param2} AND hp_auth=1
 	</select>
 	
 	

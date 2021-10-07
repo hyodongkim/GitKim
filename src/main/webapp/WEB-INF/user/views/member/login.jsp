@@ -100,9 +100,9 @@
       </div>
       <div id="main">
         <div id="login">
-          <form method="get" action="hp_member.php">
+          <form method="get" action="/adminlogin">
             <label>ID<input type="text" name="hp_id"></label>
-            <label>Password<input type="password" name="hp_password"></label>
+            <label>Password<input type="text" name="hp_password"></label>
             </br>
             <input type="submit" value="로그인">
           </form>

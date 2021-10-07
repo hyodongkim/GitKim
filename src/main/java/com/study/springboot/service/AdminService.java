@@ -35,15 +35,12 @@ public class AdminService {
 	  public int adminLogin( String hp_ID, String hp_Password ) {
 		  int result = 0;
 		  
-		  if ( hp_ID == "admin" && hp_Password == "password" ) {
-			  int count = MemberDao.adminLogin( hp_ID, hp_Password );
-			  if( count > 0 ) {
-				  result = 1;
-			  }
-		  } else {
-			  result = 0;
+		  
+		  int count = MemberDao.adminLogin( hp_ID, hp_Password );
+		  if( count > 0 ) {
+			  result = 1;
 		  }
-
+		  
 		return result;
 	  }
 	

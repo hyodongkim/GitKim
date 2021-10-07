@@ -72,13 +72,13 @@
 <body>
     <div id="wrap">
         <header>
-            <a href="admin/views/admin"><img src="/img/logo.png" alt="로고"></a>
+            <a href="/admin/views/admin"><img src="/img/logo.png" alt="로고"></a>
         </header>
         <h1>관리자페이지 로그인</h1>
         <div id="login">
-            <form method="get" action="hp_member.php">
-                <label>ID<input type="text" name="hp_id"></label>
-                <label>Password<input type="password" name="hp_password"></label>
+            <form method="post" action="/adminLogin">
+                <label>ID<input type="text" name="hp_ID"></label>
+                <label>Password<input type="text" name="hp_Password"></label>
                 </br>
                 <input type="submit" value="로그인">
             </form>

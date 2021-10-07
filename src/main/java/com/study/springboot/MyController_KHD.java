@@ -1,6 +1,5 @@
 package com.study.springboot;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -25,12 +24,10 @@ import com.study.springboot.dto.BookReviewDto;
 import com.study.springboot.dto.MemberDto;
 import com.study.springboot.dto.NoticeDto;
 import com.study.springboot.dto.QnADto;
-import com.study.springboot.dto.QnADto_admin;
-import com.study.springboot.dto.QnA_AnswerDto;
 import com.study.springboot.service.AdminService;
 
 @Controller
-public class MyController {
+public class MyController_KHD {
 	
 	@Autowired
 	private AdminService adminService;
@@ -509,41 +506,11 @@ public class MyController {
 		
 	  // 1:1 문의	
 		@RequestMapping("/admin/views/admin_qna")
-		public String admin_qna( HttpServletRequest req, Model model
-		/* ,@RequestParam("answer_Date") Date answer_Date */ ) {
+		public String admin_qna( HttpServletRequest req, Model model ) {
 			
-			// 1:1 문의 목록
-			  List<QnADto> qnalist = adminService.QnAlist();
-//			  model.addAttribute("hp_qna_list",qnalist);
-			  
+			List<QnADto> qnalist = adminService.QnAlist();
+			model.addAttribute("hp_qna_list",qnalist);
 			
-			// 1:1 문의 답
-			  List<QnADto_admin> QnADto_admin_list = new ArrayList<QnADto_admin>();
-			  
-			  for( QnADto dto : qnalist) {
-				  QnADto_admin tmp_Dto_admin = new QnADto_admin();
-				  
-				  tmp_Dto_admin.setQna_Index( dto.getQna_Index() );
-				  tmp_Dto_admin.setHp_Index( dto.getHp_Index() );
-				  tmp_Dto_admin.setHp_ID( dto.getHp_ID() );
-				  tmp_Dto_admin.setQna_Title( dto.getQna_Title() );
-				  tmp_Dto_admin.setQna_Content( dto.getQna_Content() );
-				  tmp_Dto_admin.setAnswer_Check( dto.getAnswer_Check() );
-				  tmp_Dto_admin.setQna_Date( dto.getQna_Date() );
-				  
-				  
-				  List<QnA_AnswerDto> qna_answer_list_tmp = adminService.QnA_Answer( dto.getQna_Index() );
-				  for( QnA_AnswerDto dto_answer : qna_answer_list_tmp) {
-					  
-					  tmp_Dto_admin.setAnswer_Date( dto_answer.getAnswer_Date() );
-					  
-					  QnADto_admin_list.add(tmp_Dto_admin);
-				  }
-			  }
-			
-			 model.addAttribute("QnADto_admin", QnADto_admin_list);
-			
- 			
 			return "admin/views/admin_qna";
 		}
 		
@@ -649,14 +616,74 @@ public class MyController {
 		}
 	  
 	 // 로그인	
-		@RequestMapping("/user/views/member/login")
-		public String login( HttpServletRequest req, Model model ) {
+	//	@RequestMapping("/user/views/member/login")
+	//	public String login( HttpServletRequest req, Model model ) {
 			
 			
 		
-			return "user/views/member/login";
-		}	
+	//		return "user/views/member/login";
+	//	}	
 		
+		
+		
+		// 로그인	
+		//	@RequestMapping("/user/views/member/login")
+		//	public String login( HttpServletRequest req, Model model ) {
+				
+				
+			
+		//		return "user/views/member/login";
+		//	}	
+		
+		 //로그인	
+					@RequestMapping("/admin/views/admin")
+					public String login( HttpServletRequest req, Model model ) {
+						
+						
+					
+						return "admin/views/admin";
+					}	
+				
+				
+		
+		
+		 // 관리자 로그인	
+	
+		@RequestMapping(value="/adminLogin", method=RequestMethod.POST)
+		public String adminLogin( 
+			       @RequestParam("hp_ID") String hp_ID, 
+	               @RequestParam("hp_Password") String hp_Password, ModelMap modelMap, HttpServletRequest request) throws Exception{
+			
+						if( !hp_ID.equals("admin")) {
+							System.out.println("관리자 로그인 실패 : admin아이디 아님.");
+							return "admin/views/login_fail";
+						}
+			
+			           int result = adminService.adminLogin(hp_ID,hp_Password);	
+			                 
+			           if( result == 1) {
+			                  //세션객체에 아이디 저장해놓기
+			        	   
+			        	   request.getSession().setAttribute("alert", "로그인되었습니다.");
+			   			request.getSession().setAttribute("hp_ID", hp_ID);
+			        	   System.out.println("관리자 로그인 성공");
+			        	   
+			                  return "admin/views/login_ok";
+	
+		               } else {
+		            	   request.getSession().setAttribute("alert", "로그인되었습니다.");
+		       			request.getSession().setAttribute("hp_Password", hp_Password);
+		            	   System.out.println("관리자 로그인 실패"); 	 
+			                	 
+			               	 return "admin/views/login_fail";
+			                	 
+			            }
+					         
+		}
+		
+			
+			
+			
 	 // 회원가입	
 		@RequestMapping("/user/views/member/join")
 		public String join( HttpServletRequest req, Model model ) {
