@@ -101,7 +101,7 @@
                     <td>${hp_Notice.notice_Index}</td>
                     <td>${hp_Notice.notice_Title}</td>
                     <td>${hp_Notice.notice_Content}</td>
-                    <td>${hp_Notice.notice_Date}</td>
+                    <td><fmt:formatDate value="${hp_Notice.notice_Date}" pattern="yyyy년 MM월 dd일"/></td>
                     <td>${hp_Notice.notice_Count}</td>
                     <td><a href="/admin/views/write_notice">갱신</a></td>
                     <td><a href="/admin/views/write_notice1">삽입</a></td>
@@ -112,3 +112,4 @@
     </div>
 </body>
 </html>
+
