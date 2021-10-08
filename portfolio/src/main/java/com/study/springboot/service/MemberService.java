@@ -14,10 +14,10 @@ public class MemberService {
 	private IMemberDao memberDao;
 	
 	// 회원로그인
-	public int login( String hp_ID, String hp_Password ) {
+	public int userLogin( String hp_ID, String hp_Password ) {
 		int result = 0;
 		
-		int count = memberDao.login( hp_ID, hp_Password );
+		int count = memberDao.userLogin( hp_ID, hp_Password );
 		if( count>0 ) {
 			result = 1;
 		}

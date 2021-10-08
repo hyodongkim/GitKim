@@ -1,5 +1,6 @@
 package com.study.springboot;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +25,8 @@ import com.study.springboot.dto.BookReviewDto;
 import com.study.springboot.dto.MemberDto;
 import com.study.springboot.dto.NoticeDto;
 import com.study.springboot.dto.QnADto;
+import com.study.springboot.dto.QnADto_admin;
+import com.study.springboot.dto.QnA_AnswerDto;
 import com.study.springboot.service.AdminService;
 import com.study.springboot.service.MemberService;
 
@@ -508,15 +511,46 @@ public class MyController_KHD {
 				
 				
 		
-	  // 1:1 문의	
-		@RequestMapping("/admin/views/admin_qna")
-		public String admin_qna( HttpServletRequest req, Model model ) {
-			
-			List<QnADto> qnalist = adminService.QnAlist();
-			model.addAttribute("hp_qna_list",qnalist);
-			
-			return "admin/views/admin_qna";
-		}
+				  // 1:1 문의	
+				@RequestMapping("/admin/views/admin_qna")
+				public String admin_qna( HttpServletRequest req, Model model
+				/* ,@RequestParam("answer_Date") Date answer_Date */ ) {
+					
+					// 1:1 문의 목록
+					  List<QnADto> qnalist = adminService.QnAlist();
+//					  model.addAttribute("hp_qna_list",qnalist);
+					  
+					
+					// 1:1 문의 답
+					  List<QnADto_admin> QnADto_admin_list = new ArrayList<QnADto_admin>();
+					  
+					  for( QnADto dto : qnalist) {
+						  QnADto_admin tmp_Dto_admin = new QnADto_admin();
+						  
+						  tmp_Dto_admin.setQna_Index( dto.getQna_Index() );
+						  tmp_Dto_admin.setHp_Index( dto.getHp_Index() );
+						  tmp_Dto_admin.setHp_ID( dto.getHp_ID() );
+						  tmp_Dto_admin.setQna_Title( dto.getQna_Title() );
+						  tmp_Dto_admin.setQna_Content( dto.getQna_Content() );
+						  tmp_Dto_admin.setAnswer_Check( dto.getAnswer_Check() );
+						  tmp_Dto_admin.setQna_Date( dto.getQna_Date() );
+						  
+						  
+						  List<QnA_AnswerDto> qna_answer_list_tmp = adminService.QnA_Answer( dto.getQna_Index() );
+						  for( QnA_AnswerDto dto_answer : qna_answer_list_tmp) {
+							  
+							  tmp_Dto_admin.setAnswer_Date( dto_answer.getAnswer_Date() );
+							  
+							  QnADto_admin_list.add(tmp_Dto_admin);
+						  }
+					  }
+					
+					 model.addAttribute("QnADto_admin", QnADto_admin_list);
+					
+		 			
+					return "admin/views/admin_qna";
+				}
+
 		
 		// 1:1 문의 목록 갱신이 가능한 페이지
 		@RequestMapping("/admin/views/write_qna")
