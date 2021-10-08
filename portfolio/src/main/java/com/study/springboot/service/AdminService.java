@@ -16,6 +16,7 @@ import com.study.springboot.dto.BookReviewDto;
 import com.study.springboot.dto.MemberDto;
 import com.study.springboot.dto.NoticeDto;
 import com.study.springboot.dto.QnADto;
+import com.study.springboot.dto.QnA_AnswerDto;
 
 @Component
 public class AdminService {
@@ -86,6 +87,13 @@ public class AdminService {
 		  return qnalist;
 		  
 	  }
+	  
+	// 1:1 문의 답안
+	    public List<QnA_AnswerDto> QnA_Answer( int qna_Index ) {
+			List<QnA_AnswerDto> qna_Answer = QnADao.QnA_Answer( qna_Index );
+			
+			return qna_Answer;
+	    }
 	 
 	  // 공지사항 조회수 올리기
 	  public int countNotice(int count) throws Exception{

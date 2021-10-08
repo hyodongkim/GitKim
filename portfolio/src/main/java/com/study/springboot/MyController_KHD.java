@@ -511,7 +511,7 @@ public class MyController_KHD {
 				
 				
 		
-				  // 1:1 문의	
+				 // 1:1 문의	
 				@RequestMapping("/admin/views/admin_qna")
 				public String admin_qna( HttpServletRequest req, Model model
 				/* ,@RequestParam("answer_Date") Date answer_Date */ ) {
@@ -550,7 +550,6 @@ public class MyController_KHD {
 		 			
 					return "admin/views/admin_qna";
 				}
-
 		
 		// 1:1 문의 목록 갱신이 가능한 페이지
 		@RequestMapping("/admin/views/write_qna")
